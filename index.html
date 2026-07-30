@@ -1,271 +1,1139 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>My Portfolio</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>V. Devi — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+<style>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  :root {
+    --bg: #090c14;
+    --bg-elevated: #0e1220;
+    --card: rgba(255,255,255,0.035);
+    --card-border: rgba(255,255,255,0.08);
+    --text-main: #eef2fb;
+    --text-sub: #9aa5b8;
+    --teal: #2fe0d0;
+    --purple: #a45bf0;
+    --pink: #ec5ba0;
+    --glow: linear-gradient(135deg, var(--teal), var(--purple), var(--pink));
+  }
 
-    <!-- Custom CSS -->
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
+  * { box-sizing: border-box; }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  html { scroll-behavior: smooth; }
 
-        #about img {
-            border-color: #333;
-            object-fit: cover;
-            width: 180px;
-            height: 180px;
-        }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+  }
 
-        #about .mx-auto {
-            max-width: 600px;
-        }
+  body::before, body::after {
+    content: "";
+    position: fixed;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.16;
+    z-index: 0;
+    pointer-events: none;
+  }
+  body::before { background: var(--teal); top: -120px; left: -120px; }
+  body::after { background: var(--purple); bottom: -160px; right: -160px; }
 
-        .card {
-            transition: box-shadow 0.3s ease-in-out;
-        }
+  h1, h2, h3, h4, h5 { font-family: 'Poppins', sans-serif; margin: 0; }
 
-            .card:hover {
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            }
+  section { position: relative; z-index: 1; }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+  a { text-decoration: none; }
 
-            .card .btn {
-                margin-top: 10px;
-            }
+  .accent-text {
+    background: var(--glow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 
-        .card-img-top {
-            height: 200px;
-            object-fit: cover;
-        }
+  /* NAV */
+  .nav-wrap { position: sticky; top: 0; z-index: 100; padding: 18px 24px 0; }
+  nav {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(14, 18, 32, 0.72);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    padding: 12px 12px 12px 24px;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .nav-wrap.scrolled nav {
+    box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+    border-color: rgba(47, 224, 208, 0.25);
+  }
+  .brand { font-weight: 700; font-size: 1.05rem; color: var(--text-main); letter-spacing: 0.3px; }
+  .brand span { color: var(--teal); }
+  .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a {
+    display: block;
+    color: var(--text-sub);
+    font-size: 0.92rem;
+    font-weight: 500;
+    padding: 9px 18px;
+    border-radius: 999px;
+    transition: color 0.25s ease, background 0.25s ease;
+  }
+  .nav-links a:hover { color: var(--text-main); }
+  .nav-links a.active-link { color: var(--bg); background: var(--glow); font-weight: 600; }
+  .nav-toggle { display: none; background: none; border: none; color: var(--text-main); font-size: 1.4rem; cursor: pointer; }
 
-        .btn-pink {
-            background-color: #e83e8c;
-            border: none;
-        }
+  @media (max-width: 860px) {
+    .nav-links {
+      position: absolute; top: 68px; right: 24px; left: 24px;
+      background: rgba(14, 18, 32, 0.96);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      flex-direction: column; align-items: stretch;
+      padding: 10px; gap: 2px; display: none;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { text-align: center; }
+    .nav-toggle { display: block; }
+  }
 
-            .btn-pink:hover {
-                background-color: #d63384;
-            }
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 40px;
+    padding: 90px 24px 70px;
+    max-width: 1140px;
+    margin: 0 auto;
+    min-height: 78vh;
+  }
+  .eyebrow {
+    color: var(--teal); font-weight: 600; font-size: 0.95rem; letter-spacing: 0.5px;
+    margin-bottom: 14px; opacity: 0; transform: translateY(14px);
+    animation: fadeUp 0.7s ease 0.1s forwards;
+  }
+  .hero h1 {
+    font-size: clamp(2.1rem, 4.2vw, 3.4rem); font-weight: 800; line-height: 1.15;
+    opacity: 0; transform: translateY(18px); animation: fadeUp 0.7s ease 0.25s forwards;
+  }
+  .hero .subtitle-line {
+    margin-top: 14px; font-size: clamp(1.1rem, 2.2vw, 1.5rem); font-weight: 600;
+    color: var(--text-sub); min-height: 1.6em; opacity: 0;
+    animation: fadeIn 0.6s ease 0.9s forwards;
+  }
+  .typed-target { color: var(--teal); font-weight: 700; }
+  .typed-cursor {
+    color: var(--teal);
+    font-weight: 400;
+    animation: blink 0.8s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
 
-            .btn-pink.rounded-circle {
-                width: 56px;
-                height: 56px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+  .hero p.desc {
+    margin-top: 20px; max-width: 460px; color: var(--text-sub);
+    line-height: 1.7; font-size: 0.98rem; opacity: 0; transform: translateY(14px);
+    animation: fadeUp 0.7s ease 1.1s forwards;
+  }
 
-        [data-bs-toggle="tooltip"] {
-            position: relative;
-            z-index: 10;
-        }
-    </style>
+  .social-row {
+    display: flex; gap: 12px; margin-top: 26px; opacity: 0;
+    transform: translateY(14px); animation: fadeUp 0.7s ease 1.3s forwards;
+  }
+  .social-circle {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--card-border); color: var(--text-sub); background: var(--card);
+    transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .social-circle svg { width: 17px; height: 17px; fill: currentColor; }
+  .social-circle:hover {
+    color: var(--bg); border-color: transparent; transform: translateY(-4px) scale(1.08);
+    background: var(--glow); box-shadow: 0 8px 22px rgba(47, 224, 208, 0.3);
+  }
+
+  .cta-btn {
+    display: inline-block; margin-top: 30px; padding: 13px 30px; border-radius: 999px;
+    background: var(--glow); color: #06110f; font-weight: 700; font-size: 0.95rem;
+    letter-spacing: 0.2px; box-shadow: 0 10px 30px rgba(47, 224, 208, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0; transform: translateY(14px); animation: fadeUp 0.7s ease 1.45s forwards;
+  }
+  .cta-btn:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(164, 91, 240, 0.4); }
+
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  .portrait-wrap {
+    position: relative; width: min(360px, 80vw); aspect-ratio: 1 / 1; margin: 0 auto;
+    opacity: 0; transform: scale(0.85); animation: fadeScale 0.8s ease 0.35s forwards;
+  }
+  @keyframes fadeScale { to { opacity: 1; transform: scale(1); } }
+
+  .ring-glow {
+    position: absolute; inset: -18px; border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--teal), var(--purple), var(--pink), var(--teal));
+    filter: blur(26px); opacity: 0.55; animation: spin 8s linear infinite;
+  }
+  .ring-spin {
+    position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--teal), var(--purple), var(--pink), var(--teal));
+    animation: spin 8s linear infinite;
+  }
+  .photo-frame {
+    position: absolute; inset: 12px; border-radius: 50%;
+    background: var(--bg); padding: 8px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .portrait-wrap img {
+    width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;
+    animation: floaty 5s ease-in-out infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 50px; }
+    .hero p.desc { margin-left: auto; margin-right: auto; }
+    .social-row { justify-content: center; }
+    .portrait-wrap { order: -1; margin-bottom: 10px; }
+  }
+
+  /* SECTION SHARED */
+  .section-pad { padding: 100px 0; }
+  .section-tag {
+    display: inline-block; color: var(--teal); font-weight: 600; font-size: 0.85rem;
+    letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .section-title { font-size: clamp(1.7rem, 3vw, 2.3rem); font-weight: 700; margin-bottom: 46px; }
+
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+  .stagger > * { transition-delay: calc(var(--i, 0) * 0.1s); }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 40px; }
+
+  .about-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .about-layout-single { grid-template-columns: 1fr; }
+  .about-photo {
+    position: relative;
+    width: 260px;
+    aspect-ratio: 1 / 1;
+    margin: 10px auto 0;
+  }
+  .about-role {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--teal);
+  }
+  .ring-glow.small, .ring-spin.small { animation-duration: 6s; }
+  .photo-frame.small { inset: 10px; padding: 6px; }
+
+  .reveal-left {
+    opacity: 0; transform: translateX(-40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal-left.is-visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0; transform: translateX(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal-right.is-visible { opacity: 1; transform: translateX(0); }
+
+  @media (max-width: 860px) {
+    .about-layout { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+    .about-photo { margin: 0 auto; }
+  }
+  .glass-card {
+    background: var(--card); border: 1px solid var(--card-border); border-radius: 18px;
+    padding: 26px; transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    position: relative; overflow: hidden;
+  }
+  .glass-card::before {
+    content: ""; position: absolute; inset: 0; padding: 1px; border-radius: 18px;
+    background: var(--glow); opacity: 0.4;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    transition: opacity 0.35s ease; pointer-events: none;
+    animation: glowPulse 3.2s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.4s);
+  }
+  @keyframes glowPulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.65; } }
+  @keyframes glowPulseStrong { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+  .glass-card:hover { transform: translateY(-8px); box-shadow: 0 20px 45px rgba(0,0,0,0.4); }
+  .glass-card:hover::before { opacity: 1; animation-play-state: paused; }
+
+  .about-text { color: var(--text-sub); line-height: 1.85; font-size: 1rem; max-width: 780px; }
+  .about-text strong { color: var(--text-main); }
+
+  .stat-num {
+    font-family: 'Poppins', sans-serif; font-size: 2.1rem; font-weight: 800;
+    background: var(--glow); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .stat-label { color: var(--text-sub); font-size: 0.9rem; margin-top: 4px; }
+
+  /* Per-card ambient gradient border glow — clean thin ring only, no fill wash */
+  .project-card { position: relative; }
+  .project-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    border-radius: 20px;
+    background: var(--glow);
+    opacity: 0.55;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    animation: glowPulseStrong 3.2s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.4s);
+    z-index: 2;
+  }
+  .project-card:hover::before { opacity: 1; animation-play-state: paused; }
+
+  /* PROJECTS — draggable carousel */
+  .project-carousel { position: relative; }
+  .project-track {
+    display: flex;
+    gap: 26px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 6px 6px 26px;
+    margin: 0 -6px;
+    cursor: grab;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    user-select: none;
+  }
+  .project-track::-webkit-scrollbar { display: none; }
+  .project-track.dragging { cursor: grabbing; scroll-behavior: auto; }
+  .project-card {
+    background: var(--bg-elevated); border: 1px solid var(--card-border); border-radius: 20px;
+    display: flex; flex-direction: column;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    flex: 0 0 min(340px, 82vw);
+    scroll-snap-align: start;
+  }
+  .project-card:hover {
+    transform: translateY(-10px); box-shadow: 0 24px 50px rgba(0,0,0,0.5);
+    border-color: rgba(47, 224, 208, 0.35);
+  }
+  .project-card img { -webkit-user-drag: none; pointer-events: none; }
+  .project-img-wrap { overflow: hidden; height: 190px; border-radius: 20px 20px 0 0; }
+  .project-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .project-card:hover .project-img-wrap img { transform: scale(1.09); }
+  .project-body { padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1; }
+  .project-body h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; }
+  .project-body p { color: var(--text-sub); font-size: 0.9rem; line-height: 1.65; flex: 1; }
+  .project-links { display: flex; gap: 10px; margin-top: 18px; }
+  .project-links a, .project-links button { pointer-events: auto; }
+  .pill-btn {
+    font-size: 0.82rem; font-weight: 600; padding: 9px 16px; border-radius: 999px;
+    border: 1px solid var(--card-border); color: var(--text-main); transition: all 0.3s ease;
+  }
+  .pill-btn.primary { background: var(--glow); color: #06110f; border: none; }
+  .pill-btn:hover { transform: translateY(-3px); }
+  .pill-btn:not(.primary):hover { border-color: var(--teal); color: var(--teal); }
+
+  .carousel-controls { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 4px; }
+  .carousel-arrow {
+    width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--card-border);
+    background: var(--card); color: var(--text-main); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    flex-shrink: 0;
+  }
+  .carousel-arrow:hover { border-color: var(--teal); background: rgba(47,224,208,0.08); transform: translateY(-2px); }
+  .carousel-arrow svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; }
+  .carousel-dots { display: flex; gap: 8px; }
+  .carousel-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--card-border); border: none;
+    cursor: pointer; transition: all 0.3s ease; padding: 0;
+  }
+  .carousel-dot.active { width: 22px; border-radius: 999px; background: var(--glow); }
+  .drag-hint {
+    text-align: center; color: var(--text-sub); font-size: 0.8rem; margin-top: 14px;
+    display: flex; align-items: center; justify-content: center; gap: 8px; opacity: 0.75;
+  }
+  .drag-hint svg { width: 15px; height: 15px; fill: var(--teal); }
+
+  /* SKILLS — bars + rings (animated) */
+  .skills-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 20px;
+  }
+  .skills-col-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding-bottom: 10px;
+    margin-bottom: 34px;
+    border-bottom: 2px solid var(--card-border);
+    position: relative;
+  }
+  .skills-col-title::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -2px;
+    width: 50px; height: 2px;
+    background: var(--glow);
+  }
+  .bar-skill { margin-bottom: 26px; }
+  .bar-skill-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+  .bar-icon { font-size: 1rem; }
+  .bar-percent { margin-left: auto; color: var(--teal); font-weight: 700; font-size: 0.85rem; }
+  .bar-track {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: var(--glow);
+    transition: width 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 0 12px rgba(47, 224, 208, 0.5);
+  }
+
+  .rings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  .ring-stat {
+    text-align: center;
+    position: relative;
+  }
+  .ring-stat svg { width: 120px; height: 120px; transform: rotate(-90deg); }
+  .ring-bg {
+    fill: none;
+    stroke: rgba(255,255,255,0.07);
+    stroke-width: 9;
+  }
+  .ring-fg {
+    fill: none;
+    stroke: var(--teal);
+    stroke-width: 9;
+    stroke-linecap: round;
+    stroke-dasharray: 327;
+    stroke-dashoffset: 327;
+    transition: stroke-dashoffset 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    filter: drop-shadow(0 0 6px rgba(47, 224, 208, 0.6));
+  }
+  .ring-stat-label {
+    margin-top: -78px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    font-weight: 500;
+  }
+  .ring-percent {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 4px;
+  }
+
+  @media (max-width: 860px) {
+    .skills-columns { grid-template-columns: 1fr; gap: 44px; }
+    .rings-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px; perspective: 900px; }
+  .skill-card {
+    text-align: center; padding: 32px 20px; cursor: grab;
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease, border-color 0.35s ease, box-shadow 0.35s ease, opacity 0.25s ease;
+  }
+  .skill-card::before {
+    opacity: 0.55;
+    animation: glowPulseStrong 3.2s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.4s);
+  }
+  .skill-card:hover::before { opacity: 1; animation-play-state: paused; }
+  .skill-card:active { cursor: grabbing; }
+  .skill-card.dragging { opacity: 0.35; }
+  .skill-card.drag-over { border-color: var(--teal); box-shadow: 0 0 0 2px rgba(47,224,208,0.35); }
+  .skill-icon-wrap {
+    width: 76px; height: 76px; margin: 0 auto 18px; border-radius: 50%;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.4s ease, border-color 0.4s ease;
+    transform: translateZ(24px);
+  }
+  .skill-card:hover .skill-icon-wrap { border-color: var(--teal); }
+  .skill-icon-wrap img { width: 40px; height: 40px; object-fit: contain; }
+  .skill-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; transform: translateZ(14px); }
+  .skill-card p { color: var(--text-sub); font-size: 0.86rem; line-height: 1.6; margin-bottom: 16px; }
+  .skill-card a { color: var(--teal); font-size: 0.85rem; font-weight: 600; }
+  .skill-card a:hover { text-decoration: underline; }
+  .drag-handle {
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+    margin: 0 auto 14px; color: var(--text-sub); opacity: 0.5; transition: opacity 0.3s ease;
+  }
+  .skill-card:hover .drag-handle { opacity: 0.9; color: var(--teal); }
+  .drag-handle span { width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
+
+  /* CONTACT */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .contact-info { display: flex; color: var(--text-sub); font-size: 0.95rem; }
+  .contact-info span { display: flex; align-items: center; gap: 10px; }
+  .contact-info svg { width: 18px; height: 18px; fill: var(--teal); flex-shrink: 0; }
+
+  .contact-blurb {
+    color: var(--text-sub);
+    line-height: 1.75;
+    margin-bottom: 26px;
+    max-width: 420px;
+  }
+  .contact-info-col { flex-direction: column; align-items: flex-start; gap: 14px; margin-bottom: 26px; }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .form-field {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 15px 18px;
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    resize: vertical;
+  }
+  .form-field::placeholder { color: var(--text-sub); }
+  .form-field:focus {
+    outline: none;
+    border-color: var(--teal);
+    background: rgba(47, 224, 208, 0.05);
+    box-shadow: 0 0 0 3px rgba(47, 224, 208, 0.12);
+  }
+  .submit-btn {
+    margin-top: 6px;
+    padding: 16px;
+    border: none;
+    border-radius: 999px;
+    background: var(--glow);
+    color: #06110f;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    box-shadow: 0 0 24px rgba(47, 224, 208, 0.35), 0 10px 30px rgba(0,0,0,0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 34px rgba(47, 224, 208, 0.55), 0 14px 36px rgba(164, 91, 240, 0.4);
+  }
+  .submit-btn:active { transform: translateY(-1px); }
+  .submit-btn.sent { background: linear-gradient(135deg, #22c55e, var(--teal)); }
+
+  @media (max-width: 860px) {
+    .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  footer { text-align: center; padding: 28px 24px 40px; color: var(--text-sub); font-size: 0.85rem; }
+
+  #backToTop {
+    position: fixed; right: 24px; bottom: 24px; width: 46px; height: 46px; border-radius: 50%;
+    background: var(--glow); color: #06110f; display: flex; align-items: center; justify-content: center;
+    border: none; font-size: 1.2rem; cursor: pointer; opacity: 0; pointer-events: none;
+    transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 999; box-shadow: 0 10px 30px rgba(47, 224, 208, 0.35);
+  }
+  #backToTop.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  #backToTop:hover { transform: translateY(-4px); }
+
+  @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
 </head>
-
 <body id="top">
 
-    <!-- Sticky Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">My Portfolio</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="#top">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#Skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
+<div class="nav-wrap" id="navWrap">
+  <nav>
+    <a class="brand" href="#top">Portfolio<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#top">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+  </nav>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div>
+    <div class="eyebrow">Hello, It's Me</div>
+    <h1>V. Devi<br>I'm a <span class="accent-text">Data Analyst</span></h1>
+    <div class="subtitle-line">I turn raw data into <span class="typed-target"></span></div>
+    <p class="desc">
+      Data Analyst with a background as a PL/SQL Developer — 2+ years writing efficient
+      queries and performance-tuned code, now focused on visualization, reporting, and
+      analytical solutions that drive real decisions.
+    </p>
+    <div class="social-row">
+      <a class="social-circle" href="https://www.linkedin.com/in/uvdevi/" target="_blank" title="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zm7.5 0h3.83v1.98h.05c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.78 2.65 4.78 6.1V23h-4v-6.7c0-1.6-.03-3.65-2.22-3.65-2.23 0-2.57 1.74-2.57 3.54V23h-4V8.5z"/></svg>
+      </a>
+      <a class="social-circle" href="https://x.com/v_uggina36202" target="_blank" title="Twitter / X">
+        <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-6.6L4.7 22H1.6l8.1-9.3L1 2h7l4.9 6.1L18.9 2zm-1.2 18h1.9L7.4 4H5.4l12.3 16z"/></svg>
+      </a>
+      <a class="social-circle" href="https://github.com/V-Devi/portfolio1" target="_blank" title="GitHub">
+        <svg viewBox="0 0 24 24"><path d="M12 .5C5.73.5.98 5.24.98 11.5c0 4.98 3.22 9.2 7.7 10.7.56.1.77-.24.77-.54v-2c-3.13.68-3.79-1.34-3.79-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.4-1.22.72-1.5-2.5-.28-5.13-1.25-5.13-5.56 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.1 1.16a10.8 10.8 0 0 1 5.66 0c2.15-1.46 3.1-1.16 3.1-1.16.62 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.32-2.63 5.28-5.14 5.56.41.35.77 1.04.77 2.1v3.11c0 .3.2.65.78.54 4.47-1.5 7.69-5.72 7.69-10.7C23.02 5.24 18.27.5 12 .5z"/></svg>
+      </a>
+    </div>
+    <a href="#about" class="cta-btn">More About Me</a>
+  </div>
+
+  <div class="portrait-wrap">
+    <div class="ring-glow"></div>
+    <div class="ring-spin"></div>
+    <div class="photo-frame">
+      <img src="https://v-devi.github.io/portfolio1/image.jpg" alt="V. Devi">
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about" class="section-pad">
+  <div class="container">
+    <div class="section-tag reveal">Who I Am</div>
+    <h2 class="section-title reveal">About Me</h2>
+
+    <div class="about-layout about-layout-single">
+      <div class="reveal-right">
+        <h3 class="about-role">Data Analyst</h3>
+        <p class="about-text">
+          Hello! I am a <strong>Data Analyst</strong> with a background as a <strong>PL/SQL Developer</strong>,
+          bringing over 2 years of experience writing efficient database queries, procedures,
+          and performance-tuned code. Currently, I specialize in transforming raw data into
+          actionable insights through data visualization, reporting, and analytical solutions.
+          My transition from backend development to analytics has strengthened my ability to
+          work across both technical and business domains — I'm passionate about solving
+          real-world problems with tools like Excel, SQL, Python and Power BI.
+        </p>
+
+        <div class="about-grid stagger">
+          <div class="glass-card reveal" style="--i:0;">
+            <div class="stat-num">2+</div>
+            <div class="stat-label">Years in PL/SQL Development</div>
+          </div>
+          <div class="glass-card reveal" style="--i:1;">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Dashboards Shipped</div>
+          </div>
+          <div class="glass-card reveal" style="--i:2;">
+            <div class="stat-num">4</div>
+            <div class="stat-label">Certifications Earned</div>
+          </div>
         </div>
-    </nav>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- About Section -->
-    <section id="about" class="container py-5 text-center">
-        <h2 class="mb-4 display-5">About</h2>
+<!-- Projects -->
+<section id="projects" class="section-pad">
+  <div class="container">
+    <div class="section-tag reveal">Portfolio</div>
+    <h2 class="section-title reveal">Projects</h2>
 
-        <!-- Profile Image -->
-        <div class="d-flex justify-content-center mb-4">
-            <img src="https://v-devi.github.io/portfolio1/image.jpg"
-                 alt="Profile"
-                 class="rounded-circle border border-3 shadow"
-                 style="width: 180px; height: 180px; object-fit: contain; background-color: #fff;">
+    <div class="project-carousel reveal">
+      <div class="project-track" id="projectTrack">
+        <div class="project-card" data-index="0">
+          <div class="project-img-wrap">
+            <img src="https://github.com/V-Devi/portfolio1/raw/main/blinkit%20dashboard.png" alt="BlinkIT Grocery">
+          </div>
+          <div class="project-body">
+            <h3>BlinkIT Grocery Data Analysis</h3>
+            <p>Overview of Blinkit's sales, item distribution, and outlet performance across locations and types, with interactive visuals for total sales, ratings, and category trends.</p>
+            <div class="project-links">
+              <a class="pill-btn primary" href="https://github.com/V-Devi/portfolio1/raw/main/BlinkIT%20Grocery%20Data.xlsx" target="_blank">Download</a>
+              <a class="pill-btn" href="https://github.com/V-Devi/portfolio1/raw/main/blinkit%20dashboard.png" target="_blank">View Image</a>
+            </div>
+          </div>
         </div>
 
-
-        <!-- About Text -->
-        <div class="mx-auto" style="max-width: 800px;">
-            <p class="mb-3">
-                Hello! I am a Data Analyst with a background as a PL/SQL Developer, bringing over 2 years of experience in writing efficient database queries, procedures, and performance-tuned code. Currently, I specialize in transforming raw data into actionable insights through data visualization, reporting, and analytical solutions.
-            </p>
-            <p>
-                My transition from backend development to analytics has strengthened my ability to work across both technical and business domains. I am passionate about solving real-world problems using data and continuously expanding my skills in tools like Excel, SQL, Python and Power BI.
-            </p>
+        <div class="project-card" data-index="1">
+          <div class="project-img-wrap">
+            <img src="https://github.com/V-Devi/portfolio1/raw/main/sri%20lakshmi%20general%20store%20dashboard.png" alt="Retail Store">
+          </div>
+          <div class="project-body">
+            <h3>Sri Lakshmi General Store</h3>
+            <p>Clear view of total sales, customer activity, and product categories, highlighting loyalty and category-wise performance for inventory decisions.</p>
+            <div class="project-links">
+              <a class="pill-btn primary" href="https://github.com/V-Devi/portfolio1/raw/main/Sri%20Lakshmi%20General%20Store.xlsx" target="_blank">Download</a>
+              <a class="pill-btn" href="https://github.com/V-Devi/portfolio1/raw/main/sri%20lakshmi%20general%20store%20dashboard.png" target="_blank">View Image</a>
+            </div>
+          </div>
         </div>
-    </section>
 
-
-
-
-    <!-- Projects Section -->
-    <section id="projects" class="container py-5">
-        <h2 class="text-center mb-5 display-5">Projects</h2>
-        <div class="row justify-content-center g-4">
-
-            <!-- Project 1: BlinkIT Grocery Data -->
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <img src="https://github.com/V-Devi/portfolio1/raw/main/blinkit%20dashboard.png" class="card-img-top" alt="BlinkIT Grocery">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">BlinkIT Grocery Data Analysis</h5>
-                        <p class="card-text">This dashboard is overview of Blinkit’s sales, item distribution, and outlet performance across various locations and types. It consists interactive visualizations to highlight total sales, ratings, sales trends, and product categories for quick business insights.</p>
-                        <div class="mt-auto">
-                            <a href="https://github.com/V-Devi/portfolio1/raw/main/BlinkIT%20Grocery%20Data.xlsx" target="_blank" class="btn btn-primary btn-sm me-2">Download File</a>
-                            <a href="https://github.com/V-Devi/portfolio1/raw/main/blinkit%20dashboard.png" target="_blank" class="btn btn-secondary btn-sm">View Image</a>
-                        </div>
-                    </div>
-                </div>
+        <div class="project-card" data-index="2">
+          <div class="project-img-wrap">
+            <img src="https://github.com/V-Devi/portfolio1/raw/main/choco%20dashboard.png" alt="Choco Sales">
+          </div>
+          <div class="project-body">
+            <h3>Choco Sales</h3>
+            <p>Monthly chocolate sales performance — costs, profit margin, shipments, and salesperson achievements in one interactive view.</p>
+            <div class="project-links">
+              <a class="pill-btn primary" href="https://github.com/V-Devi/portfolio1/raw/main/ac-sample-data.xlsx" target="_blank">Download</a>
+              <a class="pill-btn" href="https://github.com/V-Devi/portfolio1/raw/main/choco%20dashboard.png" target="_blank">View Image</a>
             </div>
-
-            <!-- Project 2: Sri Lakshmi General Store -->
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <img src="https://github.com/V-Devi/portfolio1/raw/main/sri%20lakshmi%20general%20store%20dashboard.png" class="card-img-top" alt="Retail Store">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Sri Lakshmi General Store</h5>
-                        <p class="card-text">This dashboard provides a clear overview of Sri Lakshmi General Store’s total sales, customer activity, product categories, and purchase trends. Visualizations highlight customer loyalty, category-wise sales, and product performance to support quick business insights and inventory decisions.</p>
-                        <div class="mt-auto">
-                            <a href="https://github.com/V-Devi/portfolio1/raw/main/Sri%20Lakshmi%20General%20Store.xlsx" target="_blank" class="btn btn-primary btn-sm me-2">Download File</a>
-                            <a href="https://github.com/V-Devi/portfolio1/raw/main/sri%20lakshmi%20general%20store%20dashboard.png" target="_blank" class="btn btn-secondary btn-sm">View Image</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 3: AC Sample Data -->
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <img src="https://github.com/V-Devi/portfolio1/raw/main/choco%20dashboard.png" class="card-img-top" alt="AC Data">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Choco Sales</h5>
-                        <p class="card-text">This dashboard summarizes monthly chocolate sales performance, displaying total sales, costs, profit margin, shipments, and salesperson achievements. Interactive charts and metrics provide a quick view of trends, shipment analysis, and team contributions for data-driven decision-making.</p>
-                        <div class="mt-auto">
-                            <a href="https://github.com/V-Devi/portfolio1/raw/main/ac-sample-data.xlsx" target="_blank" class="btn btn-primary btn-sm me-2">Download File</a>
-                            <a href="https://github.com/V-Devi/portfolio1/raw/main/choco%20dashboard.png" target="_blank" class="btn btn-secondary btn-sm">View Image</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+          </div>
         </div>
-    </section>
-    <!-- Certifications Section -->
-    <section id="Skills" class="container py-5">
-        <h2 class="text-center mb-5 display-5">Skills & Certifications</h2>
-        <div class="row justify-content-center g-4">
+      </div>
 
-            <!-- SQL Certificate -->
-            <div class="col-md-3">
-                <div class="card h-100 text-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png" class="card-img-top p-4" alt="SQL Certificate" style="height: 120px; object-fit: contain;">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">SQL Certificate</h5>
-                        <p class="card-text">Certified in writing SQL and PLSQL queries for data analysis and reporting.</p>
-                        <a href="SQL Certificate.pdf" target="_blank" class="mt-auto btn btn-link">View Certificate</a>
-                    </div>
-                </div>
-            </div>
+      <div class="carousel-controls">
+        <button class="carousel-arrow" id="prevProject" aria-label="Previous project">
+          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="carousel-dots" id="projectDots"></div>
+        <button class="carousel-arrow" id="nextProject" aria-label="Next project">
+          <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+      <div class="drag-hint">
+        <svg viewBox="0 0 24 24"><path d="M9 3a1 1 0 0 0-1 1v3H5a1 1 0 0 0-.7 1.7l4 4a1 1 0 0 0 1.4 0l4-4A1 1 0 0 0 13 8h-3V4a1 1 0 0 0-1-1zm6 8a1 1 0 0 0-1 1v3h-3a1 1 0 0 0-.7 1.7l4 4a1 1 0 0 0 1.4 0l4-4a1 1 0 0 0-.7-1.7h-3v-3a1 1 0 0 0-1-1z"/></svg>
+        Drag to browse, or use the arrows
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- Skills -->
+<section id="skills" class="section-pad">
+  <div class="container">
+    <div class="section-tag reveal">What I Work With</div>
+    <h2 class="section-title reveal">My Skills</h2>
 
-            <!-- Power BI Certificate -->
-            <div class="col-md-3">
-                <div class="card h-100 text-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg" class="card-img-top p-4" alt="Power BI" style="height: 120px; object-fit: contain;">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Power BI Certificate</h5>
-                        <p class="card-text">Skilled in creating reports, dashboards, and data models in Power BI to visualize business insights.</p>
-                        <a href="https://github.com/V-Devi/portfolio1/blob/main/Power%20BI%20Certificate.pdf" target="_blank" class="mt-auto btn btn-link">View Certificate</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Prompt Engineering Certificate -->
-            <div class="col-md-3">
-                <div class="card h-100 text-center">
-                    <img src="https://facialix.com/wp-content/uploads/2023/07/prompt-engineering-course.png" class="card-img-top" alt="Prompt Engineering" style="height: 180px; object-fit: contain; padding: 1rem;">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Prompt Engineering Certificate</h5>
-                        <p class="card-text">Skilled at writing good prompts for AI models like GPT-4, helps in getting the best results from them.</p>
-                        <a href="https://github.com/V-Devi/portfolio1/blob/main/Prompt_engineering%20certificate.pdf" target="_blank" class="mt-auto btn btn-link">View Certificate</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Storytelling Certificate -->
-            <div class="col-md-3">
-                <div class="card h-100 text-center">
-                    <img src="https://img.freepik.com/free-vector/colleagues-analyzing-financial-report_74855-4380.jpg" class="card-img-top p-4" alt="Storytelling" style="height: 120px; object-fit: contain;">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Storytelling Certificate</h5>
-                        <p class="card-text">Capable of using data storytelling techniques to present insights clearly and influence decisions.</p>
-                        <a href="Story telling certificate.pdf" target="_blank" class="mt-auto btn btn-link">View Certificate</a>
-                    </div>
-                </div>
-            </div>
-
-
-
-
+    <div class="skills-columns">
+      <div class="skills-col reveal-left">
+        <h3 class="skills-col-title">Technical Skills</h3>
+        <div class="bar-skill" data-percent="90">
+          <div class="bar-skill-head"><span class="bar-icon">🗄️</span><span>SQL / PL-SQL</span><span class="bar-percent">0%</span></div>
+          <div class="bar-track"><div class="bar-fill"></div></div>
         </div>
-    </section>
-
-
-    <!-- Contact Section -->
-    <section id="contact" class="bg-dark text-white py-5">
-        <div class="container text-center">
-            <h2 class="mb-5 display-5">Contact Me</h2>
-            <div class="row justify-content-center mb-4">
-                <div class="col-md-3 d-flex align-items-center justify-content-center mb-3 mb-md-0">
-                    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" width="24" height="24" class="me-2">
-                    <span>uvdsprabhavathi710@gmail.com</span>
-                </div>
-                <div class="col-md-3 d-flex align-items-center justify-content-center">
-                    <img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" alt="Phone" width="24" height="24" class="me-2">
-                    <span>+91-8074503557</span>
-                </div>
-            </div>
-            <div class="d-flex justify-content-center flex-wrap gap-3">
-                <a href="https://www.linkedin.com/in/uvdevi/" class="btn btn-pink rounded-circle p-3" data-bs-toggle="tooltip" title="LinkedIn">
-                    <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn" width="24" height="24">
-                </a>
-                <a href="https://x.com/v_uggina36202" class="btn btn-pink rounded-circle p-3" data-bs-toggle="tooltip" title="Twitter">
-                    <img src="https://cdn-icons-png.flaticon.com/512/145/145812.png" alt="Twitter" width="24" height="24">
-                </a>
-                <a href="https://github.com/V-Devi/portfolio1" class="btn btn-pink rounded-circle p-3" data-bs-toggle="tooltip" title="GitHub">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub" width="24" height="24">
-                </a>
-            </div>
+        <div class="bar-skill" data-percent="80">
+          <div class="bar-skill-head"><span class="bar-icon">📊</span><span>Power BI</span><span class="bar-percent">0%</span></div>
+          <div class="bar-track"><div class="bar-fill"></div></div>
         </div>
-    </section>
+        <div class="bar-skill" data-percent="85">
+          <div class="bar-skill-head"><span class="bar-icon">📈</span><span>Excel</span><span class="bar-percent">0%</span></div>
+          <div class="bar-track"><div class="bar-fill"></div></div>
+        </div>
+        <div class="bar-skill" data-percent="65">
+          <div class="bar-skill-head"><span class="bar-icon">🐍</span><span>Python</span><span class="bar-percent">0%</span></div>
+          <div class="bar-track"><div class="bar-fill"></div></div>
+        </div>
+      </div>
 
-    <!-- Bootstrap JS and Tooltip Init -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-        [...tooltipTriggerList].map(el => new bootstrap.Tooltip(el));
-    </script>
+      <div class="skills-col reveal-right">
+        <h3 class="skills-col-title">Professional Skills</h3>
+        <div class="rings-grid">
+          <div class="ring-stat" data-percent="90">
+            <svg viewBox="0 0 120 120">
+              <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="ring-fg" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div class="ring-stat-label"><span class="ring-percent">0%</span>Analytical Thinking</div>
+          </div>
+          <div class="ring-stat" data-percent="75">
+            <svg viewBox="0 0 120 120">
+              <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="ring-fg" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div class="ring-stat-label"><span class="ring-percent">0%</span>Communication</div>
+          </div>
+          <div class="ring-stat" data-percent="85">
+            <svg viewBox="0 0 120 120">
+              <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="ring-fg" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div class="ring-stat-label"><span class="ring-percent">0%</span>Problem Solving</div>
+          </div>
+          <div class="ring-stat" data-percent="80">
+            <svg viewBox="0 0 120 120">
+              <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+              <circle class="ring-fg" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <div class="ring-stat-label"><span class="ring-percent">0%</span>Teamwork</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-tag reveal" style="margin-top: 80px;">Credentials</div>
+    <h2 class="section-title reveal">Certifications</h2>
+
+    <div class="skills-grid stagger" id="skillsGrid">
+      <div class="glass-card skill-card reveal" style="--i:0;" draggable="true">
+        <div class="drag-handle"><span></span><span></span><span></span></div>
+        <div class="skill-icon-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png" alt="SQL"></div>
+        <h3>SQL Certificate</h3>
+        <p>Certified in writing SQL and PL/SQL queries for data analysis and reporting.</p>
+        <a href="SQL Certificate.pdf" target="_blank">View Certificate →</a>
+      </div>
+      <div class="glass-card skill-card reveal" style="--i:1;" draggable="true">
+        <div class="drag-handle"><span></span><span></span><span></span></div>
+        <div class="skill-icon-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg" alt="Power BI"></div>
+        <h3>Power BI Certificate</h3>
+        <p>Skilled in building reports, dashboards, and data models to visualize business insight.</p>
+        <a href="https://github.com/V-Devi/portfolio1/blob/main/Power%20BI%20Certificate.pdf" target="_blank">View Certificate →</a>
+      </div>
+      <div class="glass-card skill-card reveal" style="--i:2;" draggable="true">
+        <div class="drag-handle"><span></span><span></span><span></span></div>
+        <div class="skill-icon-wrap"><img src="https://facialix.com/wp-content/uploads/2023/07/prompt-engineering-course.png" alt="Prompt Engineering"></div>
+        <h3>Prompt Engineering</h3>
+        <p>Skilled at writing effective prompts for AI models to get the best possible results.</p>
+        <a href="https://github.com/V-Devi/portfolio1/blob/main/Prompt_engineering%20certificate.pdf" target="_blank">View Certificate →</a>
+      </div>
+      <div class="glass-card skill-card reveal" style="--i:3;" draggable="true">
+        <div class="drag-handle"><span></span><span></span><span></span></div>
+        <div class="skill-icon-wrap"><img src="https://img.freepik.com/free-vector/colleagues-analyzing-financial-report_74855-4380.jpg" alt="Storytelling"></div>
+        <h3>Storytelling Certificate</h3>
+        <p>Able to use data storytelling to present insights clearly and influence decisions.</p>
+        <a href="Story telling certificate.pdf" target="_blank">View Certificate →</a>
+      </div>
+    </div>
+    <div class="drag-hint">
+      <svg viewBox="0 0 24 24"><path d="M9 3a1 1 0 0 0-1 1v3H5a1 1 0 0 0-.7 1.7l4 4a1 1 0 0 0 1.4 0l4-4A1 1 0 0 0 13 8h-3V4a1 1 0 0 0-1-1zm6 8a1 1 0 0 0-1 1v3h-3a1 1 0 0 0-.7 1.7l4 4a1 1 0 0 0 1.4 0l4-4a1 1 0 0 0-.7-1.7h-3v-3a1 1 0 0 0-1-1z"/></svg>
+      Drag any card to reorder — tilts as you move your cursor over it
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section-pad">
+  <div class="container">
+    <div class="section-tag reveal">Get In Touch</div>
+    <h2 class="section-title reveal">Contact <span class="accent-text">Me</span></h2>
+
+    <div class="contact-layout">
+      <div class="reveal-left">
+        <h3 class="about-role">Let's Work Together</h3>
+        <p class="contact-blurb">
+          Have a project, a dataset that needs a story, or just want to say hello?
+          My inbox is always open — I usually reply within a day.
+        </p>
+
+        <div class="contact-info contact-info-col">
+          <span><svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg> uvdsprabhavathi710@gmail.com</span>
+          <span><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.7 3.6 4.9 6.3 6.3l2.1-2.1c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C11.4 21 3 12.6 3 3c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .8-.2 1L6.6 10.8z"/></svg> +91-8074503557</span>
+        </div>
+
+        <div class="social-row">
+          <a class="social-circle" href="https://www.linkedin.com/in/uvdevi/" target="_blank" title="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zm7.5 0h3.83v1.98h.05c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.78 2.65 4.78 6.1V23h-4v-6.7c0-1.6-.03-3.65-2.22-3.65-2.23 0-2.57 1.74-2.57 3.54V23h-4V8.5z"/></svg>
+          </a>
+          <a class="social-circle" href="https://x.com/v_uggina36202" target="_blank" title="Twitter / X">
+            <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-6.6L4.7 22H1.6l8.1-9.3L1 2h7l4.9 6.1L18.9 2zm-1.2 18h1.9L7.4 4H5.4l12.3 16z"/></svg>
+          </a>
+          <a class="social-circle" href="https://github.com/V-Devi/portfolio1" target="_blank" title="GitHub">
+            <svg viewBox="0 0 24 24"><path d="M12 .5C5.73.5.98 5.24.98 11.5c0 4.98 3.22 9.2 7.7 10.7.56.1.77-.24.77-.54v-2c-3.13.68-3.79-1.34-3.79-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.4-1.22.72-1.5-2.5-.28-5.13-1.25-5.13-5.56 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.1 1.16a10.8 10.8 0 0 1 5.66 0c2.15-1.46 3.1-1.16 3.1-1.16.62 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.32-2.63 5.28-5.14 5.56.41.35.77 1.04.77 2.1v3.11c0 .3.2.65.78.54 4.47-1.5 7.69-5.72 7.69-10.7C23.02 5.24 18.27.5 12 .5z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form reveal-right" id="contactForm">
+        <input class="form-field" type="text" name="name" placeholder="Enter Your Name" required>
+        <input class="form-field" type="email" name="email" placeholder="Enter Your Email" required>
+        <input class="form-field" type="text" name="subject" placeholder="Enter Your Subject">
+        <textarea class="form-field" name="message" placeholder="Enter Your Message" rows="5" required></textarea>
+        <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 V. Devi. Built with curiosity and a lot of SQL.</footer>
+
+<button id="backToTop" aria-label="Back to top">&#8593;</button>
+
+<script>
+  new Typed('.typed-target', {
+    strings: ['actionable insight', 'clear dashboards', 'business decisions', 'growth stories'],
+    typeSpeed: 55,
+    backSpeed: 30,
+    backDelay: 1400,
+    startDelay: 900,
+    loop: true,
+    smartBackspace: true
+  });
+
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('is-visible');
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => observer.observe(el));
+
+  const navWrap = document.getElementById('navWrap');
+  const links = document.querySelectorAll('.nav-links a');
+  const backBtn = document.getElementById('backToTop');
+
+  function onScroll() {
+    navWrap.classList.toggle('scrolled', window.scrollY > 20);
+
+    let currentId = 'top';
+    const scrollPos = window.scrollY + 140;
+    document.querySelectorAll('section[id]').forEach(sec => {
+      if (scrollPos >= sec.offsetTop) currentId = sec.id;
+    });
+    if (window.scrollY < 100) currentId = 'top';
+
+    links.forEach(link => {
+      const href = link.getAttribute('href').replace('#', '');
+      link.classList.toggle('active-link', href === currentId);
+    });
+
+    backBtn.classList.toggle('show', window.scrollY > 400);
+  }
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+
+  backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  /* ---------- Project carousel: drag-to-scroll + arrows + dots ---------- */
+  (function () {
+    const track = document.getElementById('projectTrack');
+    const dotsWrap = document.getElementById('projectDots');
+    const prevBtn = document.getElementById('prevProject');
+    const nextBtn = document.getElementById('nextProject');
+    const cards = Array.from(track.children);
+
+    cards.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot';
+      dot.setAttribute('aria-label', 'Go to project ' + (i + 1));
+      dot.addEventListener('click', () => scrollToCard(i));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    function scrollToCard(i) {
+      const card = cards[i];
+      track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+    }
+
+    function updateActiveDot() {
+      let closest = 0;
+      let minDist = Infinity;
+      cards.forEach((card, i) => {
+        const dist = Math.abs(card.offsetLeft - track.offsetLeft - track.scrollLeft);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      dots.forEach((d, i) => d.classList.toggle('active', i === closest));
+    }
+    track.addEventListener('scroll', () => requestAnimationFrame(updateActiveDot));
+    updateActiveDot();
+
+    prevBtn.addEventListener('click', () => {
+      track.scrollBy({ left: -(cards[0].offsetWidth + 26), behavior: 'smooth' });
+    });
+    nextBtn.addEventListener('click', () => {
+      track.scrollBy({ left: cards[0].offsetWidth + 26, behavior: 'smooth' });
+    });
+
+    // Mouse-drag to scroll
+    let isDown = false, startX = 0, scrollStart = 0, moved = false;
+    track.addEventListener('mousedown', (e) => {
+      isDown = true; moved = false;
+      track.classList.add('dragging');
+      startX = e.pageX; scrollStart = track.scrollLeft;
+    });
+    window.addEventListener('mouseup', () => { isDown = false; track.classList.remove('dragging'); });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      const dx = e.pageX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      track.scrollLeft = scrollStart - dx;
+    });
+    // Prevent accidental link clicks after a drag
+    track.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
+  })();
+
+  /* ---------- Contact form (front-end only) ---------- */
+  (function () {
+    const form = document.getElementById('contactForm');
+    const btn = document.getElementById('submitBtn');
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const original = btn.textContent;
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Message Sent ✓';
+        btn.classList.add('sent');
+        form.reset();
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('sent');
+          btn.disabled = false;
+        }, 2400);
+      }, 900);
+    });
+  })();
+
+  (function () {
+    const RING_CIRC = 327; // 2 * PI * 52
+    let played = false;
+
+    function playSkillAnimations() {
+      if (played) return;
+      played = true;
+
+      document.querySelectorAll('.bar-skill').forEach(el => {
+        const pct = el.dataset.percent;
+        const fill = el.querySelector('.bar-fill');
+        const label = el.querySelector('.bar-percent');
+        requestAnimationFrame(() => { fill.style.width = pct + '%'; });
+        animateNumber(label, 0, parseInt(pct, 10), 1400);
+      });
+
+      document.querySelectorAll('.ring-stat').forEach(el => {
+        const pct = parseInt(el.dataset.percent, 10);
+        const fg = el.querySelector('.ring-fg');
+        const label = el.querySelector('.ring-percent');
+        const offset = RING_CIRC - (pct / 100) * RING_CIRC;
+        requestAnimationFrame(() => { fg.style.strokeDashoffset = offset; });
+        animateNumber(label, 0, pct, 1400);
+      });
+    }
+
+    function animateNumber(el, from, to, duration) {
+      const start = performance.now();
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(from + (to - from) * eased) + '%';
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const skillsSection = document.getElementById('skills');
+    if (skillsSection) {
+      const skillsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) playSkillAnimations();
+        });
+      }, { threshold: 0.25 });
+      skillsObserver.observe(skillsSection);
+    }
+  })();
+
+  (function () {
+    const grid = document.getElementById('skillsGrid');
+    const skillCards = Array.from(grid.querySelectorAll('.skill-card'));
+
+    // Tilt on mouse move
+    skillCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(900px) rotateY(${x * 14}deg) rotateX(${-y * 14}deg) translateY(-4px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+
+    // Drag to reorder
+    let dragged = null;
+    skillCards.forEach(card => {
+      card.addEventListener('dragstart', () => {
+        dragged = card;
+        setTimeout(() => card.classList.add('dragging'), 0);
+      });
+      card.addEventListener('dragend', () => {
+        card.classList.remove('dragging');
+        skillCards.forEach(c => c.classList.remove('drag-over'));
+      });
+      card.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        if (card !== dragged) card.classList.add('drag-over');
+      });
+      card.addEventListener('dragleave', () => card.classList.remove('drag-over'));
+      card.addEventListener('drop', (e) => {
+        e.preventDefault();
+        card.classList.remove('drag-over');
+        if (dragged && dragged !== card) {
+          const cardsNow = Array.from(grid.children);
+          const draggedIdx = cardsNow.indexOf(dragged);
+          const targetIdx = cardsNow.indexOf(card);
+          if (draggedIdx < targetIdx) {
+            card.after(dragged);
+          } else {
+            card.before(dragged);
+          }
+        }
+      });
+    });
+  })();
+</script>
 </body>
 </html>
-
