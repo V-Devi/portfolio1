@@ -890,7 +890,7 @@
         </div>
       </div>
 
-      <form class="contact-form reveal-right" id="contactForm">
+      <form class="contact-form reveal-right" id="contactForm" action="https://formspree.io/f/mgogqdoa" method="POST">
         <input class="form-field" type="text" name="name" placeholder="Enter Your Name" required>
         <input class="form-field" type="email" name="email" placeholder="Enter Your Email" required>
         <input class="form-field" type="text" name="subject" placeholder="Enter Your Subject">
@@ -1014,26 +1014,41 @@
     track.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
   })();
 
-  /* ---------- Contact form (front-end only) ---------- */
+  /* ---------- Contact form: real submission via Formspree ---------- */
   (function () {
     const form = document.getElementById('contactForm');
     const btn = document.getElementById('submitBtn');
     if (!form) return;
-    form.addEventListener('submit', (e) => {
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const original = btn.textContent;
       btn.textContent = 'Sending...';
       btn.disabled = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          btn.textContent = 'Message Sent ✓';
+          btn.classList.add('sent');
+          form.reset();
+        } else {
+          btn.textContent = 'Something went wrong';
+        }
+      } catch (err) {
+        btn.textContent = 'Network error — try again';
+      }
+
       setTimeout(() => {
-        btn.textContent = 'Message Sent ✓';
-        btn.classList.add('sent');
-        form.reset();
-        setTimeout(() => {
-          btn.textContent = original;
-          btn.classList.remove('sent');
-          btn.disabled = false;
-        }, 2400);
-      }, 900);
+        btn.textContent = original;
+        btn.classList.remove('sent');
+        btn.disabled = false;
+      }, 2600);
     });
   })();
 
