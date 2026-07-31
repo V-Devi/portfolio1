@@ -138,6 +138,7 @@
     animation: fadeIn 0.6s ease 0.9s forwards;
   }
   .typed-target { color: var(--teal); font-weight: 700; }
+  .about-typed-target { color: var(--teal); font-weight: 700; }
   .typed-cursor {
     color: var(--teal);
     font-weight: 400;
@@ -215,27 +216,91 @@
   }
 
   /* SECTION SHARED */
-  .section-pad { padding: 100px 0; }
+  .section-pad { padding: 56px 0; }
   .section-tag {
     display: inline-block; color: var(--teal); font-weight: 600; font-size: 0.85rem;
     letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px;
   }
-  .section-title { font-size: clamp(1.7rem, 3vw, 2.3rem); font-weight: 700; margin-bottom: 46px; }
+  .section-title { font-size: clamp(1.7rem, 3vw, 2.3rem); font-weight: 700; margin-bottom: 32px; }
+  #about.section-pad { padding-bottom: 10px; }
+  #projects.section-pad { padding-top: 10px; }
 
   .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.is-visible { opacity: 1; transform: translateY(0); }
   .stagger > * { transition-delay: calc(var(--i, 0) * 0.1s); }
 
   /* ABOUT */
-  .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 40px; }
+  .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 20px; }
+  .about-grid.stagger > * { transition-delay: calc(var(--i, 0) * 0.35s); }
+  .about-grid .reveal {
+    opacity: 0;
+    transform: none;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+  }
+  .about-grid .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0);
+  }
 
   .about-layout {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 60px;
+    grid-template-columns: 1fr 190px;
+    gap: 34px;
     align-items: start;
   }
   .about-layout-single { grid-template-columns: 1fr; }
+  .about-tagline {
+    color: var(--text-main);
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 18px;
+    opacity: 0.9;
+  }
+  .stat-icon { font-size: 1.4rem; margin-bottom: 10px; }
+
+  .about-visual {
+    position: relative;
+    width: 100%;
+    max-width: 170px;
+    aspect-ratio: 1 / 1;
+    margin: 10px auto 0;
+  }
+
+  .tech-cycle {
+    position: absolute;
+    inset: 0;
+  }
+
+  .tech-item {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    color: var(--teal);
+  }
+  .tech-item.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .tech-item svg { width: 84px; height: 84px; }
+  .tech-item span {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  @media (max-width: 860px) {
+    .about-layout { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+    .about-visual { margin: 0 auto 20px; }
+  }
   .about-photo {
     position: relative;
     width: 260px;
@@ -268,7 +333,7 @@
   }
   .glass-card {
     background: var(--card); border: 1px solid var(--card-border); border-radius: 18px;
-    padding: 26px; transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    padding: 20px 22px; transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
     position: relative; overflow: hidden;
   }
   .glass-card::before {
@@ -317,27 +382,23 @@
 
   /* PROJECTS — draggable carousel */
   .project-carousel { position: relative; }
+  .project-viewport { overflow: hidden; }
   .project-track {
     display: flex;
     gap: 26px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
     padding: 6px 6px 26px;
     margin: 0 -6px;
     cursor: grab;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
     user-select: none;
+    transition: transform 0.6s ease;
+    will-change: transform;
   }
-  .project-track::-webkit-scrollbar { display: none; }
-  .project-track.dragging { cursor: grabbing; scroll-behavior: auto; }
+  .project-track.dragging { cursor: grabbing; transition: none; }
   .project-card {
     background: var(--bg-elevated); border: 1px solid var(--card-border); border-radius: 20px;
     display: flex; flex-direction: column;
     transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
     flex: 0 0 min(340px, 82vw);
-    scroll-snap-align: start;
   }
   .project-card:hover {
     transform: translateY(-10px); box-shadow: 0 24px 50px rgba(0,0,0,0.5);
@@ -446,13 +507,13 @@
   }
   .ring-fg {
     fill: none;
-    stroke: var(--teal);
+    stroke: url(#ringGradient);
     stroke-width: 9;
     stroke-linecap: round;
     stroke-dasharray: 327;
     stroke-dashoffset: 327;
     transition: stroke-dashoffset 1.4s cubic-bezier(0.22, 1, 0.36, 1);
-    filter: drop-shadow(0 0 6px rgba(47, 224, 208, 0.6));
+    filter: drop-shadow(0 0 8px rgba(164, 91, 240, 0.55));
   }
   .ring-stat-label {
     margin-top: -78px;
@@ -477,10 +538,18 @@
     .skills-columns { grid-template-columns: 1fr; gap: 44px; }
     .rings-grid { grid-template-columns: repeat(2, 1fr); }
   }
-  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px; perspective: 900px; }
+  .skills-viewport { overflow: hidden; }
+  .skills-grid {
+    display: flex;
+    gap: 22px;
+    perspective: 900px;
+    transition: transform 0.6s ease;
+    will-change: transform;
+  }
   .skill-card {
     text-align: center; padding: 32px 20px; cursor: grab;
     transform-style: preserve-3d;
+    flex: 0 0 min(230px, 78vw);
     transition: transform 0.15s ease, border-color 0.35s ease, box-shadow 0.35s ease, opacity 0.25s ease;
   }
   .skill-card::before {
@@ -598,6 +667,17 @@
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
   }
+
+  /* --- Wipe reveal for the about paragraph (replaces the letter-by-letter typing) --- */
+  .about-wipe {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+  }
+  .about-wipe.is-visible {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
 </style>
 </head>
 <body id="top">
@@ -653,34 +733,60 @@
 <!-- About -->
 <section id="about" class="section-pad">
   <div class="container">
-    <div class="section-tag reveal">Who I Am</div>
-    <h2 class="section-title reveal">About Me</h2>
+    <div class="section-tag reveal">WHO I AM</div>
+    <h2 class="section-title reveal"><span class="typed-about-title"></span></h2>
 
-    <div class="about-layout about-layout-single">
-      <div class="reveal-right">
+    <div class="about-layout">
+      <div class="reveal-left">
         <h3 class="about-role">Data Analyst</h3>
-        <p class="about-text">
-          Hello! I am a <strong>Data Analyst</strong> with a background as a <strong>PL/SQL Developer</strong>,
-          bringing over 2 years of experience writing efficient database queries, procedures,
-          and performance-tuned code. Currently, I specialize in transforming raw data into
-          actionable insights through data visualization, reporting, and analytical solutions.
-          My transition from backend development to analytics has strengthened my ability to
-          work across both technical and business domains — I'm passionate about solving
-          real-world problems with tools like Excel, SQL, Python and Power BI.
-        </p>
+        <p class="about-text about-wipe" id="aboutTypedText"></p>
 
         <div class="about-grid stagger">
           <div class="glass-card reveal" style="--i:0;">
-            <div class="stat-num">2+</div>
+            <div class="stat-icon">🏆</div>
+            <div class="stat-num" data-count="2" data-suffix="+">0</div>
             <div class="stat-label">Years in PL/SQL Development</div>
           </div>
           <div class="glass-card reveal" style="--i:1;">
-            <div class="stat-num">3</div>
+            <div class="stat-icon">📊</div>
+            <div class="stat-num" data-count="3" data-suffix="">0</div>
             <div class="stat-label">Dashboards Shipped</div>
           </div>
           <div class="glass-card reveal" style="--i:2;">
-            <div class="stat-num">4</div>
+            <div class="stat-icon">🎓</div>
+            <div class="stat-num" data-count="4" data-suffix="">0</div>
             <div class="stat-label">Certifications Earned</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-visual reveal-right">
+        <svg width="0" height="0" style="position:absolute;">
+          <defs>
+            <linearGradient id="techGradient" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#2fe0d0"></stop>
+              <stop offset="33%" stop-color="#4c8dff"></stop>
+              <stop offset="66%" stop-color="#a45bf0"></stop>
+              <stop offset="100%" stop-color="#ec5ba0"></stop>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="tech-cycle" id="techCycle">
+          <div class="tech-item active" data-name="SQL">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#techGradient)" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>
+            <span>SQL</span>
+          </div>
+          <div class="tech-item" data-name="Python">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#techGradient)" stroke-width="1.8"><path d="M14.5 3H8a2 2 0 0 0-2 2v3h6v1H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v-3a2 2 0 0 1 2-2h6.5"/><path d="M9.5 21H16a2 2 0 0 0 2-2v-3h-6v-1h8a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2v3a2 2 0 0 1-2 2H9.5"/></svg>
+            <span>Python</span>
+          </div>
+          <div class="tech-item" data-name="Excel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#techGradient)" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+            <span>Excel</span>
+          </div>
+          <div class="tech-item" data-name="Power BI">
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#techGradient)" stroke-width="1.8"><rect x="3" y="12" width="4" height="8" rx="0.5"/><rect x="10" y="8" width="4" height="12" rx="0.5"/><rect x="17" y="4" width="4" height="16" rx="0.5"/></svg>
+            <span>Power BI</span>
           </div>
         </div>
       </div>
@@ -695,6 +801,7 @@
     <h2 class="section-title reveal">Projects</h2>
 
     <div class="project-carousel reveal">
+      <div class="project-viewport">
       <div class="project-track" id="projectTrack">
         <div class="project-card" data-index="0">
           <div class="project-img-wrap">
@@ -737,6 +844,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
 
       <div class="carousel-controls">
@@ -785,6 +893,15 @@
 
       <div class="skills-col reveal-right">
         <h3 class="skills-col-title">Professional Skills</h3>
+        <svg width="0" height="0" style="position:absolute;">
+          <defs>
+            <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#2fe0d0"></stop>
+              <stop offset="50%" stop-color="#a45bf0"></stop>
+              <stop offset="100%" stop-color="#ec5ba0"></stop>
+            </linearGradient>
+          </defs>
+        </svg>
         <div class="rings-grid">
           <div class="ring-stat" data-percent="90">
             <svg viewBox="0 0 120 120">
@@ -821,6 +938,7 @@
     <div class="section-tag reveal" style="margin-top: 80px;">Credentials</div>
     <h2 class="section-title reveal">Certifications</h2>
 
+    <div class="skills-viewport">
     <div class="skills-grid stagger" id="skillsGrid">
       <div class="glass-card skill-card reveal" style="--i:0;" draggable="true">
         <div class="drag-handle"><span></span><span></span><span></span></div>
@@ -850,6 +968,7 @@
         <p>Able to use data storytelling to present insights clearly and influence decisions.</p>
         <a href="Story telling certificate.pdf" target="_blank">View Certificate →</a>
       </div>
+    </div>
     </div>
     <div class="drag-hint">
       <svg viewBox="0 0 24 24"><path d="M9 3a1 1 0 0 0-1 1v3H5a1 1 0 0 0-.7 1.7l4 4a1 1 0 0 0 1.4 0l4-4A1 1 0 0 0 13 8h-3V4a1 1 0 0 0-1-1zm6 8a1 1 0 0 0-1 1v3h-3a1 1 0 0 0-.7 1.7l4 4a1 1 0 0 0 1.4 0l4-4a1 1 0 0 0-.7-1.7h-3v-3a1 1 0 0 0-1-1z"/></svg>
@@ -955,63 +1074,73 @@
 
   backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  /* ---------- Project carousel: drag-to-scroll + arrows + dots ---------- */
+  /* ---------- Reusable auto-slider: rotates the first card to the back on a timer ---------- */
+  function createAutoSlider(track, { stepMs = 1000, dots = null, prevBtn = null, nextBtn = null } = {}) {
+    function stepSize() {
+      const first = track.children[0];
+      const style = getComputedStyle(track);
+      const gap = parseFloat(style.columnGap || style.gap || 0) || 0;
+      return first.getBoundingClientRect().width + gap;
+    }
+
+    function advance(reverse) {
+      const dist = stepSize();
+      if (reverse) {
+        const last = track.lastElementChild;
+        track.insertBefore(last, track.firstElementChild);
+        track.style.transition = 'none';
+        track.style.transform = `translateX(-${dist}px)`;
+        void track.offsetHeight;
+        track.style.transition = 'transform 0.6s ease';
+        track.style.transform = 'translateX(0)';
+      } else {
+        track.style.transition = 'transform 0.6s ease';
+        track.style.transform = `translateX(-${dist}px)`;
+        setTimeout(() => {
+          track.style.transition = 'none';
+          track.appendChild(track.firstElementChild);
+          track.style.transform = 'translateX(0)';
+          void track.offsetHeight;
+        }, 600);
+      }
+    }
+    let timer = null;
+    let paused = false;
+    function tick() { if (!paused) advance(false); }
+    function start() { stop(); timer = setInterval(tick, stepMs); }
+    function stop() { if (timer) clearInterval(timer); }
+
+    const viewport = track.parentElement;
+    viewport.addEventListener('mouseenter', () => { paused = true; });
+    viewport.addEventListener('mouseleave', () => { paused = false; });
+    viewport.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+    viewport.addEventListener('touchend', () => { setTimeout(() => paused = false, 1500); }, { passive: true });
+
+    if (prevBtn) prevBtn.addEventListener('click', () => { advance(true); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { advance(false); });
+
+    start();
+    return { start, stop };
+  }
+
+  /* ---------- Projects: auto-slide every second ---------- */
   (function () {
     const track = document.getElementById('projectTrack');
-    const dotsWrap = document.getElementById('projectDots');
     const prevBtn = document.getElementById('prevProject');
     const nextBtn = document.getElementById('nextProject');
-    const cards = Array.from(track.children);
+    const dotsWrap = document.getElementById('projectDots');
+    if (!track) return;
 
-    cards.forEach((_, i) => {
+    // Simple position dots (visual only, since the carousel loops continuously)
+    const count = track.children.length;
+    for (let i = 0; i < count; i++) {
       const dot = document.createElement('button');
-      dot.className = 'carousel-dot';
-      dot.setAttribute('aria-label', 'Go to project ' + (i + 1));
-      dot.addEventListener('click', () => scrollToCard(i));
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Project ' + (i + 1));
       dotsWrap.appendChild(dot);
-    });
-    const dots = Array.from(dotsWrap.children);
-
-    function scrollToCard(i) {
-      const card = cards[i];
-      track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior: 'smooth' });
     }
 
-    function updateActiveDot() {
-      let closest = 0;
-      let minDist = Infinity;
-      cards.forEach((card, i) => {
-        const dist = Math.abs(card.offsetLeft - track.offsetLeft - track.scrollLeft);
-        if (dist < minDist) { minDist = dist; closest = i; }
-      });
-      dots.forEach((d, i) => d.classList.toggle('active', i === closest));
-    }
-    track.addEventListener('scroll', () => requestAnimationFrame(updateActiveDot));
-    updateActiveDot();
-
-    prevBtn.addEventListener('click', () => {
-      track.scrollBy({ left: -(cards[0].offsetWidth + 26), behavior: 'smooth' });
-    });
-    nextBtn.addEventListener('click', () => {
-      track.scrollBy({ left: cards[0].offsetWidth + 26, behavior: 'smooth' });
-    });
-
-    // Mouse-drag to scroll
-    let isDown = false, startX = 0, scrollStart = 0, moved = false;
-    track.addEventListener('mousedown', (e) => {
-      isDown = true; moved = false;
-      track.classList.add('dragging');
-      startX = e.pageX; scrollStart = track.scrollLeft;
-    });
-    window.addEventListener('mouseup', () => { isDown = false; track.classList.remove('dragging'); });
-    window.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      const dx = e.pageX - startX;
-      if (Math.abs(dx) > 4) moved = true;
-      track.scrollLeft = scrollStart - dx;
-    });
-    // Prevent accidental link clicks after a drag
-    track.addEventListener('click', (e) => { if (moved) e.preventDefault(); }, true);
+    createAutoSlider(track, { stepMs: 1000, prevBtn, nextBtn });
   })();
 
   /* ---------- Contact form: real submission via Formspree ---------- */
@@ -1050,6 +1179,98 @@
         btn.disabled = false;
       }, 2600);
     });
+  })();
+
+  /* ---------- About: smooth icon crossfade cycle ---------- */
+  (function () {
+    const cycle = document.getElementById('techCycle');
+    if (!cycle) return;
+    const items = Array.from(cycle.querySelectorAll('.tech-item'));
+    let index = 0;
+    setInterval(() => {
+      items[index].classList.remove('active');
+      index = (index + 1) % items.length;
+      items[index].classList.add('active');
+    }, 1000);
+  })();
+
+  /* ---------- About: cycling typed heading ---------- */
+  (function () {
+    const target = document.querySelector('.typed-about-title');
+    if (!target) return;
+    let played = false;
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !played) {
+            played = true;
+            new Typed('.typed-about-title', {
+              strings: ['About Me', 'My Story', 'My Journey', 'Get To Know Me'],
+              typeSpeed: 65,
+              backSpeed: 35,
+              backDelay: 1600,
+              loop: true,
+              smartBackspace: true
+            });
+          }
+        });
+      }, { threshold: 0.15 });
+      obs.observe(aboutSection);
+    }
+  })();
+
+  /* ---------- About: wipe-in reveal for the description paragraph (no letter-by-letter typing) ---------- */
+  (function () {
+    const target = document.getElementById('aboutTypedText');
+    if (!target) return;
+    const aboutHTML = 'Hello! I am a <strong>Data Analyst</strong> with a background as a <strong>PL/SQL Developer</strong>, bringing over 2 years of experience writing efficient database queries, procedures, and performance-tuned code. Currently, I specialize in transforming raw data into actionable insights through data visualization, reporting, and analytical solutions. My transition from backend development to analytics has strengthened my ability to work across both technical and business domains — I\'m passionate about solving real-world problems with tools like Excel, SQL, Python and Power BI.';
+    target.innerHTML = aboutHTML;
+
+    let played = false;
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !played) {
+            played = true;
+            target.classList.add('is-visible');
+          }
+        });
+      }, { threshold: 0.25 });
+      obs.observe(aboutSection);
+    }
+  })();
+
+  /* ---------- About stat counters ---------- */
+  (function () {
+    let played = false;
+    function animateNum(el, to, suffix, duration) {
+      const start = performance.now();
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(to * eased) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !played) {
+            played = true;
+            document.querySelectorAll('.stat-num').forEach(el => {
+              const to = parseInt(el.dataset.count, 10) || 0;
+              const suffix = el.dataset.suffix || '';
+              animateNum(el, to, suffix, 1200);
+            });
+          }
+        });
+      }, { threshold: 0.35 });
+      obs.observe(aboutSection);
+    }
   })();
 
   (function () {
@@ -1148,6 +1369,13 @@
         }
       });
     });
+  })();
+
+  /* ---------- Certificates: auto-slide every second ---------- */
+  (function () {
+    const track = document.getElementById('skillsGrid');
+    if (!track) return;
+    createAutoSlider(track, { stepMs: 1000 });
   })();
 </script>
 </body>
