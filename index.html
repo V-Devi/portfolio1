@@ -290,7 +290,23 @@
     opacity: 1;
     transform: scale(1);
   }
-  .tech-item svg { width: 84px; height: 84px; }
+  .tech-item .tech-logo-wrap {
+    width: 84px;
+    height: 84px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    overflow: hidden;
+  }
+  .tech-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
   .tech-item span {
     font-size: 1.15rem;
     font-weight: 700;
@@ -473,7 +489,7 @@
     font-size: 0.92rem;
     font-weight: 500;
   }
-  .bar-icon { font-size: 1rem; }
+  .bar-icon { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; }
   .bar-percent { margin-left: auto; color: var(--teal); font-weight: 700; font-size: 0.85rem; }
   .bar-track {
     height: 8px;
@@ -567,6 +583,7 @@
     display: flex; align-items: center; justify-content: center;
     transition: transform 0.4s ease, border-color 0.4s ease;
     transform: translateZ(24px);
+    overflow: hidden;
   }
   .skill-card:hover .skill-icon-wrap { border-color: var(--teal); }
   .skill-icon-wrap img { width: 40px; height: 40px; object-fit: contain; }
@@ -759,39 +776,29 @@
       </div>
 
       <div class="about-visual reveal-right">
-        <svg width="0" height="0" style="position:absolute;">
-          <defs>
-            <linearGradient id="techGradient" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#2fe0d0"></stop>
-              <stop offset="33%" stop-color="#4c8dff"></stop>
-              <stop offset="66%" stop-color="#a45bf0"></stop>
-              <stop offset="100%" stop-color="#ec5ba0"></stop>
-            </linearGradient>
-          </defs>
-        </svg>
         <div class="tech-cycle" id="techCycle">
           <div class="tech-item active" data-name="SQL">
-            <svg viewBox="0 0 24 24" fill="none" stroke="url(#techGradient)" stroke-width="1.8"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>
+            <div class="tech-logo-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png" alt="SQL logo"></div>
             <span>SQL</span>
           </div>
           <div class="tech-item" data-name="Python">
-            <svg viewBox="0 0 24 24" fill="none" stroke="url(#techGradient)" stroke-width="1.8"><path d="M14.5 3H8a2 2 0 0 0-2 2v3h6v1H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2v-3a2 2 0 0 1 2-2h6.5"/><path d="M9.5 21H16a2 2 0 0 0 2-2v-3h-6v-1h8a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2v3a2 2 0 0 1-2 2H9.5"/></svg>
+            <div class="tech-logo-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python logo"></div>
             <span>Python</span>
           </div>
           <div class="tech-item" data-name="PySpark">
-            <svg viewBox="0 0 24 24" fill="none" stroke="url(#techGradient)" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2l1.5 4.5L18 4l-2 4.5 4.5 1-4 3 3 3.5-4.5-1 1 4.5-3.5-3-3 4-1-4.5L4 17l2-4.5L2 11l4.5-1L5 5.5 9 8z"/></svg>
+            <div class="tech-logo-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Apache_Spark_logo.svg" alt="Apache Spark logo"></div>
             <span>PySpark</span>
           </div>
           <div class="tech-item" data-name="AWS">
-            <svg viewBox="0 0 24 24" fill="none" stroke="url(#techGradient)" stroke-width="1.8"><path d="M6 17a4 4 0 0 1-1-7.87 5 5 0 0 1 9.8-1.6A4.5 4.5 0 0 1 18 16.5"/><path d="M6 17h12"/></svg>
+            <div class="tech-logo-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS logo"></div>
             <span>AWS</span>
           </div>
-          <div class="tech-item" data-name="Excel">
-            <svg viewBox="0 0 24 24" fill="none" stroke="url(#techGradient)" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
-            <span>Excel</span>
+          <div class="tech-item" data-name="Databricks">
+            <div class="tech-logo-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/6/63/Databricks_Logo.png" alt="Databricks logo"></div>
+            <span>Databricks</span>
           </div>
           <div class="tech-item" data-name="Power BI">
-            <svg viewBox="0 0 24 24" fill="none" stroke="url(#techGradient)" stroke-width="1.8"><rect x="3" y="12" width="4" height="8" rx="0.5"/><rect x="10" y="8" width="4" height="12" rx="0.5"/><rect x="17" y="4" width="4" height="16" rx="0.5"/></svg>
+            <div class="tech-logo-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg" alt="Power BI logo"></div>
             <span>Power BI</span>
           </div>
         </div>
@@ -880,31 +887,31 @@
       <div class="skills-col reveal-left">
         <h3 class="skills-col-title">Technical Skills</h3>
         <div class="bar-skill" data-percent="90">
-          <div class="bar-skill-head"><span class="bar-icon">🗄️</span><span>SQL / PL-SQL</span><span class="bar-percent">0%</span></div>
+          <div class="bar-skill-head"><img class="bar-icon" src="https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png" alt="SQL"><span>SQL / PL-SQL</span><span class="bar-percent">0%</span></div>
           <div class="bar-track"><div class="bar-fill"></div></div>
         </div>
         <div class="bar-skill" data-percent="85">
-          <div class="bar-skill-head"><span class="bar-icon">🐍</span><span>Python</span><span class="bar-percent">0%</span></div>
+          <div class="bar-skill-head"><img class="bar-icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python"><span>Python</span><span class="bar-percent">0%</span></div>
           <div class="bar-track"><div class="bar-fill"></div></div>
         </div>
         <div class="bar-skill" data-percent="85">
-          <div class="bar-skill-head"><span class="bar-icon">📈</span><span>AWS</span><span class="bar-percent">0%</span></div>
+          <div class="bar-skill-head"><img class="bar-icon" src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS"><span>AWS</span><span class="bar-percent">0%</span></div>
           <div class="bar-track"><div class="bar-fill"></div></div>
         </div>
         <div class="bar-skill" data-percent="75">
-          <div class="bar-skill-head"><span class="bar-icon">🐍</span><span>Databricks</span><span class="bar-percent">0%</span></div>
+          <div class="bar-skill-head"><img class="bar-icon" src="https://upload.wikimedia.org/wikipedia/commons/6/63/Databricks_Logo.png" alt="Databricks"><span>Databricks</span><span class="bar-percent">0%</span></div>
           <div class="bar-track"><div class="bar-fill"></div></div>
         </div>
         <div class="bar-skill" data-percent="80">
-          <div class="bar-skill-head"><span class="bar-icon">📊</span><span>Power BI</span><span class="bar-percent">0%</span></div>
+          <div class="bar-skill-head"><img class="bar-icon" src="https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg" alt="Power BI"><span>Power BI</span><span class="bar-percent">0%</span></div>
           <div class="bar-track"><div class="bar-fill"></div></div>
         </div>
         <div class="bar-skill" data-percent="85">
-          <div class="bar-skill-head"><span class="bar-icon">📈</span><span>Excel</span><span class="bar-percent">0%</span></div>
+          <div class="bar-skill-head"><img class="bar-icon" src="https://tse3.mm.bing.net/th/id/OIP.B5ACRqGTEtZT5ttGPy-SuQHaEK?r=0&pid=Api&P=0&h=180" alt="Excel"><span>Excel</span><span class="bar-percent">0%</span></div>
           <div class="bar-track"><div class="bar-fill"></div></div>
         </div>
         <div class="bar-skill" data-percent="65">
-          <div class="bar-skill-head"><span class="bar-icon">🐍</span><span>PySpark</span><span class="bar-percent">0%</span></div>
+          <div class="bar-skill-head"><img class="bar-icon" src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Apache_Spark_logo.svg" alt="PySpark"><span>PySpark</span><span class="bar-percent">0%</span></div>
           <div class="bar-track"><div class="bar-fill"></div></div>
         </div>
       </div>
@@ -967,7 +974,7 @@
       </div>
       <div class="glass-card skill-card reveal" style="--i:3;" draggable="true">
         <div class="drag-handle"><span></span><span></span><span></span></div>
-        <div class="skill-icon-wrap"><img src="https://tse3.mm.bing.net/th/id/OIP.yqm9r9hiG0rksbIi-Ti1-wHaDm?r=0&pid=Api&P=0&h=180" alt="Databricks_certified_data_engineer"></div>
+        <div class="skill-icon-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/6/63/Databricks_Logo.png" alt="Databricks_certified_data_engineer"></div>
         <h3>Databricks Certificate</h3>
         <p>Validates skills in building, optimizing, and managing data pipelines on the Databricks Lakehouse Platform using Apache Spark for large-scale data processing.</p>
         <a href="Databricks_certified_data_engineer.pdf" target="_blank">View Certificate →</a>
